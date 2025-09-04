@@ -12,7 +12,6 @@ CREATE INDEX idx_user_username ON users(username);
 CREATE TABLE user_auth (
     user_id       INTEGER PRIMARY KEY,
     password_hash TEXT,
-    google_id     TEXT,
     FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 

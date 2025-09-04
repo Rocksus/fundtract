@@ -7,6 +7,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+//go:generate sqlc generate -f ../../sqlc.yaml
+//go:generate swag init --pd -g app.go -o ../../docs -d ./,../../internal
+//go:generate swag fmt
+
 func InitApp() *echo.Echo {
 	e := echo.New()
 

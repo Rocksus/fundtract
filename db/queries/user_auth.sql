@@ -2,14 +2,12 @@
 -- name: CreateUserAuth :one
 INSERT INTO user_auth (user_id, password_hash, google_id)
 VALUES ($1, $2, $3)
-RETURNING user_id, password_hash, google_id;
+RETURNING *;
 
 -- GetUserAuthByUserID returns authentication details for a user.
 -- name: GetUserAuthByUserID :one
 SELECT 
-  user_id, 
-  password_hash, 
-  google_id
+  *
 FROM user_auth
 WHERE user_id = $1;
 
@@ -17,7 +15,6 @@ WHERE user_id = $1;
 -- name: UpdateUserAuth :one
 UPDATE user_auth
 SET 
-  password_hash = COALESCE($2, password_hash),
-  google_id     = COALESCE($3, google_id)
+  password_hash = COALESCE($2, password_hash)
 WHERE user_id = $1
-RETURNING user_id, password_hash, google_id;
+RETURNING *;

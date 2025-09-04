@@ -12,31 +12,12 @@ INSERT INTO account_subscription (
 VALUES (
     $1, $2, $3, $4, $5, $6, $7
 )
-RETURNING 
-    subscription_id, 
-    account_id, 
-    user_id, 
-    bill_at, 
-    transaction_type, 
-    category_id, 
-    notes, 
-    magnified_transaction_amount, 
-    created_at, 
-    updated_at;
+RETURNING *;
 
 -- GetAccountSubscriptionByID returns a subscription by its ID.
 -- name: GetAccountSubscriptionByID :one
 SELECT 
-    subscription_id, 
-    account_id, 
-    user_id, 
-    bill_at, 
-    transaction_type, 
-    category_id, 
-    notes, 
-    magnified_transaction_amount, 
-    created_at, 
-    updated_at
+  *
 FROM account_subscription
 WHERE subscription_id = $1
   AND deleted_at IS NULL;
@@ -44,16 +25,7 @@ WHERE subscription_id = $1
 -- ListAccountSubscriptionsByAccount returns all non-deleted subscriptions for an account.
 -- name: ListAccountSubscriptionsByAccount :many
 SELECT 
-    subscription_id, 
-    account_id, 
-    user_id, 
-    bill_at, 
-    transaction_type, 
-    category_id, 
-    notes, 
-    magnified_transaction_amount, 
-    created_at, 
-    updated_at
+  *
 FROM account_subscription
 WHERE account_id = $1
   AND deleted_at IS NULL
@@ -71,14 +43,4 @@ SET
   updated_at = datetime('now')
 WHERE subscription_id = $1
   AND deleted_at IS NULL
-RETURNING 
-    subscription_id, 
-    account_id, 
-    user_id, 
-    bill_at, 
-    transaction_type, 
-    category_id, 
-    notes, 
-    magnified_transaction_amount, 
-    created_at, 
-    updated_at;
+RETURNING *;
